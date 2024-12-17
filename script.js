@@ -5,7 +5,7 @@ function getRandomInt(min, max) {
 }
 
 // строка с названием проекта
-let title = "JS_project";
+const title = "JS_project";
 console.log("type title: ", typeof title);
 
 //строка с названиями типов экранов через запятую
@@ -16,7 +16,7 @@ console.log("прописное screens: ", screens);
 console.log("массив screens: ", screens.split(", "));
 
 //любое число (сколько хотите заработать),
-fullPrice = 333333;
+const fullPrice = 333333;
 console.log("type fullPrice: ", typeof fullPrice);
 console.log(
   "Стоимость разработки сайта (" + fullPrice + ") рублей/ долларов/гривен/юани"
@@ -24,14 +24,14 @@ console.log(
 
 //любое число
 // let screenPrice = Math.random();
-let screenPrice = getRandomInt(-1000000, 10000000);
+const screenPrice = getRandomInt(-1000000, 10000000);
 console.log(screenPrice);
 console.log(
   "Стоимость верстки экранов (" + screenPrice + ") рублей/ долларов/гривен/юани"
 );
 
 //любое число от 1 до 100
-let rollback = getRandomInt(0, 100);
+const rollback = getRandomInt(0, 100);
 console.log("рандомно от 0 до 100: ", rollback);
 console.log(
   "Вознаграждение посреднику (" +
@@ -39,7 +39,7 @@ console.log(
     ") рублей/ долларов/гривен/юани"
 );
 //булевое значение
-adaptive = getRandomInt(0, 1);
+let adaptive = getRandomInt(0, 1);
 if (getRandomInt(0, 1) == 1) {
   adaptive = true;
 } else {
