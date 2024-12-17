@@ -7,7 +7,7 @@ function getRandomInt(min, max) {
 }
 
 // строка с названием проекта
-let title = prompt("Как называется ваш проект?");
+const title = prompt("Как называется ваш проект?");
 console.log("type title: ", typeof title);
 
 //строка с названиями типов экранов через запятую
@@ -24,7 +24,7 @@ if (screens != null) {
 
 //любое число
 // let screenPrice = Math.random();
-let screenPrice = prompt("Сколько будет стоить данная работа?");
+const screenPrice = prompt("Сколько будет стоить данная работа?");
 console.log(screenPrice);
 console.log(
   "Стоимость верстки экранов (" + screenPrice + ") рублей/ долларов/гривен/юани"
@@ -32,20 +32,20 @@ console.log(
 
 //булевое значение
 let adaptive = false;
-let adaptive_on = prompt("Нужен ли адаптив на сайте?", "Да, нужен");
+const adaptive_on = prompt("Нужен ли адаптив на сайте?", "Да, нужен");
 if (adaptive_on == "Да, нужен") {
   adaptive = true;
 }
 console.log("adaptive: " + adaptive + " " + typeof adaptive);
 
-let service1 = prompt("Какой дополнительный тип услуги нужен?");
-let servicePrice1 = +prompt("Сколько это будет стоить?");
+const service1 = prompt("Какой дополнительный тип услуги нужен?");
+const servicePrice1 = +prompt("Сколько это будет стоить?");
 console.log(typeof servicePrice1 + " servicePrice1: ", servicePrice1);
-let service2 = prompt("Какой дополнительный тип услуги нужен?");
-let servicePrice2 = +prompt("Сколько это будет стоить?");
+const service2 = prompt("Какой дополнительный тип услуги нужен?");
+const servicePrice2 = +prompt("Сколько это будет стоить?");
 console.log(typeof servicePrice2 + " servicePrice2: ", servicePrice2);
 
-let fullPrice =
+const fullPrice =
   Number(screenPrice) + Number(servicePrice1) + Number(servicePrice2);
 
 //любое число (сколько хотите заработать),
@@ -56,7 +56,7 @@ console.log(
 );
 
 //любое число от 1 до 100
-let rollback = getRandomInt(0, 100);
+const rollback = getRandomInt(0, 100);
 console.log("рандомно от 0 до 100: ", rollback);
 console.log(
   "Вознаграждение посреднику (" +
