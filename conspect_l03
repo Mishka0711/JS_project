@@ -1,0 +1,173 @@
+"use strict";
+//пример1
+function getMessage() {
+  console.log("start");
+}
+getMessage();
+
+//пример2 с аргументом
+function step(str) {
+  console.log(str);
+}
+// step("1");
+// step("2");
+// step("3");
+
+//пример3 с 2 аргументами
+//данный вызов функции возможен до и после обьявления
+function step(index, str) {
+  console.log(index + " " + str);
+}
+// step(1, "step1");
+// step(2, "step2");
+// step(3, "step3");
+
+//данный вызов функции возможен после обьявления самый правильный
+
+const step2 = function (index, str) {
+  console.log(index + " " + str);
+};
+// step2(1, "step1");
+// step2(2, "step2");
+// step2(3, "step3");
+
+//устаревшее
+const step3 = new Function("index", "str", 'console.log(index + " " + str)');
+// step3(1, "step1");
+// step3(2, "step2");
+// step3(3, "step3");
+
+let res;
+const countSum = function (a, b) {
+  res = a + b;
+  // console.log(res);
+  console.log(a + b);
+};
+console.log(res); //undefined
+countSum(3, 5); //8
+console.log(res); //8
+
+//с return
+const countSum2 = function (a, b) {
+  return a + b;
+};
+let res2 = countSum2(5, 5);
+console.log(res2); //8
+
+//еще короче
+console.log(countSum2(25, 5) + 10);
+
+// значения по умолчанию в параметрах
+const countSum3 = function (a, b = 20) {
+  return a + b;
+};
+
+console.log(countSum3(5, 100)); //25
+
+// вывод аргументов
+const countSum4 = function (a, b = 20) {
+  console.log(arguments);
+  console.log(arguments[4]);
+  return a + b;
+};
+console.log(countSum4(5, 100, 1, 2, 3, 4, 5, 6, 7)); //25
+
+//нечистые функции
+let count = 12;
+const countSum6 = function (a, b) {
+  return a + b + count;
+};
+
+//чистые функции (детерминированные)
+const countSum5 = function (a, b) {
+  return a + b;
+};
+console.log(countSum5(5, 100)); //25
+
+// функции посложнее
+// const countSum7 = function (a, b, callback) {
+//   return a + callback(b);
+// };
+// const secondFunc = function (num) {
+//   return num + 2;
+// };
+// console.log(countSum7(3, 10, secondFunc));
+
+//аноннимные функции
+function one() {
+  console.log("one");
+}
+
+const two = function () {
+  console.log("two");
+};
+
+console.log(one);
+console.log(two);
+
+//упрощение для одноразовых функций
+
+const countSum8 = function (a, b, callback) {
+  return a + callback(b);
+};
+
+console.log(
+  countSum8(3, 10, function (num) {
+    return num + 2;
+  })
+);
+
+//пример
+const money = 5000;
+const expenses1 = 200;
+const expenses2 = 300;
+
+const sumExpenses = function (exp1, exp2) {
+  return exp1 + exp2;
+};
+//вариант1
+// const countTotal = function () {
+//   return money - sumExpenses(expenses1, expenses2);
+// };
+// console.log(countTotal());
+// console.log(sumExpenses(expenses1, expenses2));
+
+//вариант2
+const countTotal = function (count, call) {
+  return count - call(expenses1, expenses2);
+};
+console.log(countTotal(money, sumExpenses));
+
+//вариант3
+console.log(
+  countTotal(money, function (exp1, exp2) {
+    return exp1 + exp2;
+  })
+);
+//вариант 1
+// const sendServer = function () {
+//   setTimeout(function () {
+//     console.log("вызов прошел");
+//   }, 2000);
+// };
+
+// const someFunc = function () {
+//   console.log("отработала вторая функция");
+// };
+
+// sendServer();
+// someFunc();
+
+//вариант 2
+const sendServer = function (call) {
+  setTimeout(function () {
+    console.log("вызов прошел");
+    call();
+  }, 2000);
+};
+
+const someFunc = function () {
+  console.log("отработала вторая функция");
+};
+
+sendServer(someFunc);
