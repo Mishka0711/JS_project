@@ -24,11 +24,24 @@ const appData = {
   },
 
   asking: function () {
-    appData.title = prompt("Как называется ваш проект?", "Калькулятор верстки");
+    do {
+      appData.title = prompt(
+        "Как называется ваш проект?",
+        "Калькулятор верстки"
+      );
+      // console.log(appData.isNumber(appData.title));
+      // console.log(typeof appData.title);
+    } while (
+      appData.isNumber(appData.title) ||
+      typeof appData.title != "string"
+    );
 
     for (let i = 0; i < 2; i++) {
-      let name = prompt("Какие типы экранов нужно разработать?");
+      let name = "";
       let price = 0;
+      do {
+        name = prompt("Какие типы экранов нужно разработать?");
+      } while (appData.isNumber(name) || typeof name != "string");
 
       do {
         price = prompt("Сколько будет стоить данная работа?");
@@ -39,8 +52,12 @@ const appData = {
     }
 
     for (let i = 0; i < 2; i++) {
-      let name = prompt("Какой дополнительный тип услуги нужен?");
+      let name = "";
       let price = 0;
+
+      do {
+        name = prompt("Какой дополнительный тип услуги нужен?");
+      } while (appData.isNumber(name) || typeof name != "string");
 
       do {
         price = prompt("Сколько это будет стоить?");
