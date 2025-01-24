@@ -45,6 +45,7 @@ const appData = {
 
     buttonPlus.addEventListener("click", appData.addScreensBlock);
     inputRange.addEventListener("change", appData.rangered);
+    resetBtn.addEventListener("click", appData.reset);
   },
   rangered: function () {
     // console.log(inputRange.value);
@@ -65,16 +66,67 @@ const appData = {
     // appData.getServicePercentPrice();
     // appData.logger();
     console.log(appData);
+    appData.blocked_fields(true);
     appData.showResult();
   },
-  showResult: function () {
-    total.value = appData.screenPrice;
-    totalCountOther.value =
-      appData.servicePricesPercent + appData.servicePricesNumber;
-    fullTotalCount.value = appData.fullPrice;
-    totalCountRollback.value = appData.servicePercentPrice;
-    totalCount.value = appData.screensCount;
+  reset: () => {
+    appData.clearScreens();
+    appData.clearServices();
+    appData.clearTotals();
+    appData.blocked_fields(false);
   },
+  clearTotals: () => {
+    const totals = document.querySelectorAll(".total-input");
+    totals.forEach((tot_input) => {
+      tot_input.value = "";
+    });
+  },
+  clearServices: () => {
+    //блокируем раздел services
+    const bl_sevices = document.querySelectorAll("input[type=checkbox]");
+    bl_sevices.forEach((service) => {
+      service.checked = false;
+    });
+  },
+  clearScreens: () => {
+    //удаление добавленных экранов
+    screens.forEach((screen, index) => {
+      console.log(screen);
+      if (index > 0) {
+        screens[index].remove();
+      } else {
+        console.log(screen.querySelector("select").value);
+        screen.querySelector("input[type=text]").value = "";
+        screen.querySelector("select").value = "";
+      }
+    });
+  },
+  blocked_fields: (blocked_param) => {
+    //блокируем или разблокируем раздел screens
+    const bl_screens = document.querySelectorAll(".screen");
+    bl_screens.forEach((screen) => {
+      screen.querySelector("select").disabled = blocked_param;
+      screen.querySelector("input[type=text]").disabled = blocked_param;
+    });
+    //блокируем или разблокируем раздел services
+    const bl_sevices = document.querySelectorAll("input[type=checkbox]");
+    bl_sevices.forEach((service) => {
+      service.disabled = blocked_param;
+    });
+    //блокируем добавление новых экранов
+    if (blocked_param === true) {
+      //блокируем кнопку рассчитать и показываем reset
+      buttonPlus.removeEventListener("click", appData.addScreensBlock);
+      startBtn.style.display = "none";
+      resetBtn.style.display = "";
+    } else {
+      buttonPlus.addEventListener("click", appData.addScreensBlock);
+      //разблокируем кнопку рассчитать и скрываем reset
+      startBtn.style.display = "";
+      resetBtn.style.display = "none";
+    }
+  },
+
   // isNumber: function (num) {
   //   return !isNaN(parseFloat(num)) && isFinite(num);
   // },
@@ -131,7 +183,7 @@ const appData = {
       const check = item.querySelector("input[type=checkbox]");
       const label = item.querySelector("label");
       const input = item.querySelector("input[type=text]");
-
+      check.classList.add = "blocked";
       if (check.checked) {
         appData.servicesPercent[label.textContent] = +input.value;
       }
@@ -146,7 +198,7 @@ const appData = {
       }
     });
   },
-  addScreensBlock: function () {
+  addScreensBlock: () => {
     const cloneScreen = screens[0].cloneNode(true);
     console.log(cloneScreen);
     screens[screens.length - 1].after(cloneScreen);
@@ -178,7 +230,14 @@ const appData = {
     appData.servicePercentPrice =
       appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
   },
-
+  showResult: function () {
+    total.value = appData.screenPrice;
+    totalCountOther.value =
+      appData.servicePricesPercent + appData.servicePricesNumber;
+    fullTotalCount.value = appData.fullPrice;
+    totalCountRollback.value = appData.servicePercentPrice;
+    totalCount.value = appData.screensCount;
+  },
   // getServicePercentPrice: function () {},
 
   // getRollbackMessage: function (price) {
