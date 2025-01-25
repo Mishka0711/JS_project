@@ -43,7 +43,7 @@ const appData = {
   servicesNumber: {},
   cms_percent: 0,
 
-  init: () => {
+  init: function () {
     appData.addTitle();
     appData.screensCheck();
     screensElements1.addEventListener("input", appData.screensCheck);
@@ -60,7 +60,7 @@ const appData = {
     inputRange.addEventListener("change", appData.rangered);
     resetBtn.addEventListener("click", appData.reset);
   },
-  rangered: () => {
+  rangered: function () {
     // console.log(inputRange.value);
     appData.rollback = inputRange.value;
     inputRangeValue.textContent = inputRange.value + "%";
@@ -68,11 +68,11 @@ const appData = {
       appData.start();
     }
   },
-  addTitle: () => {
+  addTitle: function () {
     console.log(title.textContent);
     document.title = title.textContent;
   },
-  start: () => {
+  start: function () {
     appData.addScreens();
     appData.addSevices();
     appData.addPrices();
@@ -90,7 +90,7 @@ const appData = {
     appData.cms_block();
     appData.screensCheck();
   },
-  cms_block: () => {
+  cms_block: function () {
     appData.cms_percent = 0;
     const cms_variants = document.querySelector(".hidden-cms-variants");
     // console.log(cms_open_var_other);
@@ -111,13 +111,13 @@ const appData = {
     }
     console.log("cms_percent ", appData.cms_percent);
   },
-  clearTotals: () => {
+  clearTotals: function () {
     const totals = document.querySelectorAll(".total-input");
     totals.forEach((tot_input) => {
       tot_input.value = "";
     });
   },
-  clearServices: () => {
+  clearServices: function () {
     //блокируем раздел services
     const bl_sevices = document.querySelectorAll("input[type=checkbox]");
     bl_sevices.forEach((service) => {
@@ -126,7 +126,7 @@ const appData = {
     cms_open_var.querySelector("select").value = "";
     document.querySelector("#cms-other-input").value = "";
   },
-  clearScreens: () => {
+  clearScreens: function () {
     //удаление добавленных экранов
     screens.forEach((screen, index) => {
       console.log(screen);
@@ -139,7 +139,7 @@ const appData = {
       }
     });
   },
-  blocked_fields: (blocked_param) => {
+  blocked_fields: function (blocked_param) {
     //блокируем или разблокируем раздел screens
     const bl_screens = document.querySelectorAll(".screen");
     bl_screens.forEach((screen) => {
@@ -168,7 +168,7 @@ const appData = {
   // isNumber: function (num) {
   //   return !isNaN(parseFloat(num)) && isFinite(num);
   // },
-  screensCheck: () => {
+  screensCheck: function () {
     screens = document.querySelectorAll(".screen");
     appData.screensCheckErrors = 0;
     screens.forEach((screen, index) => {
@@ -197,7 +197,7 @@ const appData = {
       console.log("не могу рассчитать");
     }
   },
-  addScreens: () => {
+  addScreens: function () {
     appData.screens = [];
     appData.screensCount = 0;
     screens = document.querySelectorAll(".screen");
@@ -215,7 +215,7 @@ const appData = {
     console.log(appData.screens);
   },
 
-  addSevices: () => {
+  addSevices: function () {
     appData.servicesNumber = {};
     otherItemsPercent.forEach((item) => {
       const check = item.querySelector("input[type=checkbox]");
@@ -236,14 +236,14 @@ const appData = {
       }
     });
   },
-  addScreensBlock: () => {
+  addScreensBlock: function () {
     const cloneScreen = screens[0].cloneNode(true);
     console.log(cloneScreen);
     screens[screens.length - 1].after(cloneScreen);
     appData.screensCheck();
   },
 
-  addPrices: () => {
+  addPrices: function () {
     appData.screenPrice = 0;
     appData.servicePricesNumber = 0;
     appData.servicePricesPercent = 0;
@@ -269,7 +269,7 @@ const appData = {
     appData.servicePercentPrice =
       appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
   },
-  showResult: () => {
+  showResult: function () {
     total.value = appData.screenPrice;
     totalCountOther.value =
       appData.servicePricesPercent + appData.servicePricesNumber;
@@ -290,12 +290,12 @@ const appData = {
   //     return "Что то пошло не так";
   //   }
   // },
-  isString: (Str) => {
+  isString: function (Str) {
     return (
       (typeof Str === "string" || Str instanceof String) && Str.trim() !== ""
     );
   },
-  logger: () => {
+  logger: function () {
     console.log("allServicePrices", appData.fullPrice);
     console.log(appData.servicePercentPrice);
     console.log(appData.screens);
