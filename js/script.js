@@ -65,7 +65,8 @@ const appData = {
     appData.rollback = inputRange.value;
     inputRangeValue.textContent = inputRange.value + "%";
     if (total.value > 0) {
-      appData.start();
+      console.log(this);
+      this.start().bind(appData);
     }
   },
   addTitle: function () {
@@ -73,22 +74,22 @@ const appData = {
     document.title = title.textContent;
   },
   start: function () {
-    appData.addScreens();
-    appData.addSevices();
-    appData.addPrices();
+    this.addScreens();
+    this.addSevices();
+    this.addPrices();
     // appData.getServicePercentPrice();
     // appData.logger();
     console.log(appData);
-    appData.blocked_fields(true);
-    appData.showResult();
+    this.blocked_fields(true);
+    this.showResult();
   },
   reset: () => {
-    appData.clearScreens();
-    appData.clearServices();
-    appData.clearTotals();
-    appData.blocked_fields(false);
-    appData.cms_block();
-    appData.screensCheck();
+    this.clearScreens();
+    this.clearServices();
+    this.clearTotals();
+    this.blocked_fields(false);
+    this.cms_block();
+    this.screensCheck();
   },
   cms_block: function () {
     appData.cms_percent = 0;
@@ -190,10 +191,12 @@ const appData = {
     console.log("Ошибок в экранах " + appData.screensCheckErrors);
     if (appData.screensCheckErrors === 0) {
       console.log(appData.screensCheckErrors);
-      startBtn.addEventListener("click", appData.start);
+      console.log(this);
+      startBtn.addEventListener("click", this.start.bind(appData));
       console.log("рассчитываем");
     } else {
-      startBtn.removeEventListener("click", appData.start);
+      console.log(this);
+      startBtn.removeEventListener("click", this.start.bind(appData));
       console.log("не могу рассчитать");
     }
   },
