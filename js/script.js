@@ -82,8 +82,9 @@ const appData = {
     // this.getServicePercentPrice();
     // this.logger();
     // console.log(this);
-    this.blocked_fields(true);
+    // this.rangered();
     this.showResult();
+    this.blocked_fields(true);
     console.log("start working");
   },
   reset: function () {
@@ -166,6 +167,9 @@ const appData = {
       startBtn.style.display = "";
       resetBtn.style.display = "none";
     }
+    //блокируем поля блока выбора cms
+    document.querySelector("#cms-select").disabled = blocked_param;
+    document.querySelector("#cms-other-input").disabled = blocked_param;
   },
 
   // isNumber: function (num) {
@@ -262,6 +266,7 @@ const appData = {
     }
 
     for (let key in this.servicesPercent) {
+      console.log("servicePricesPercent " + this.servicePricesPercent);
       this.servicePricesPercent +=
         this.screenPrice * (this.servicesPercent[key] / 100);
     }
