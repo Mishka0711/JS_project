@@ -16,9 +16,9 @@ const totalCount = document.getElementsByClassName("total-input")[1];
 const totalCountOther = document.getElementsByClassName("total-input")[2];
 const fullTotalCount = document.getElementsByClassName("total-input")[3];
 const totalCountRollback = document.getElementsByClassName("total-input")[4];
-const cms_open = document.getElementById("cms-open");
-const cms_open_var = document.querySelector(".hidden-cms-variants");
-const cms_open_var_other = document.querySelector(
+const cmsOpen = document.getElementById("cms-open");
+const cmsOpenVar = document.querySelector(".hidden-cms-variants");
+const cmsOpenVarOther = document.querySelector(
   ".hidden-cms-variants > .main-controls__input"
 );
 
@@ -41,7 +41,7 @@ const appData = {
   servicePercentPrice: 0,
   servicesPercent: {},
   servicesNumber: {},
-  cms_percent: 0,
+  cmsPercent: 0,
 
   init: function () {
     // console.log("init " + this);
@@ -51,14 +51,14 @@ const appData = {
     screensElements1.addEventListener("input", () => {
       this.screensCheck();
     });
-    cms_open.addEventListener("change", () => {
-      this.cms_block();
+    cmsOpen.addEventListener("change", () => {
+      this.cmsBlock();
     });
-    cms_open_var.querySelector("select").addEventListener("input", () => {
-      this.cms_block();
+    cmsOpenVar.querySelector("select").addEventListener("input", () => {
+      this.cmsBlock();
     });
     document.querySelector("#cms-other-input").addEventListener("input", () => {
-      this.cms_block();
+      this.cmsBlock();
     });
     console.log("проверка перед условием " + this.screensCheckErrors);
 
@@ -98,50 +98,50 @@ const appData = {
     // console.log(this);
     // this.rangered();
     this.showResult();
-    this.blocked_fields(true);
+    this.blockedFields(true);
     console.log("start working");
   },
   reset: function () {
     this.clearScreens();
     this.clearServices();
     this.clearTotals();
-    this.blocked_fields(false);
-    this.cms_block();
+    this.blockedFields(false);
+    this.cmsBlock();
     this.screensCheck();
   },
-  cms_block: function () {
-    this.cms_percent = 0;
-    const cms_variants = document.querySelector(".hidden-cms-variants");
-    // console.log(cms_open_var_other);
-    // console.log(cms_open_var.querySelector("select").value);
-    if (cms_open.checked) {
-      cms_variants.style.display = "flex";
-      if (cms_open_var.querySelector("select").value === "other") {
-        cms_open_var_other.style.display = "flex";
-        this.cms_percent =
+  cmsBlock: function () {
+    this.cmsPercent = 0;
+    const cmsVariants = document.querySelector(".hidden-cms-variants");
+    // console.log(cmsOpenVarOther);
+    // console.log(cmsOpenVar.querySelector("select").value);
+    if (cmsOpen.checked) {
+      cmsVariants.style.display = "flex";
+      if (cmsOpenVar.querySelector("select").value === "other") {
+        cmsOpenVarOther.style.display = "flex";
+        this.cmsPercent =
           +document.querySelector("#cms-other-input").value * 0.01;
       } else {
-        cms_open_var_other.style.display = "none";
-        this.cms_percent = +cms_open_var.querySelector("select").value * 0.01;
+        cmsOpenVarOther.style.display = "none";
+        this.cmsPercent = +cmsOpenVar.querySelector("select").value * 0.01;
       }
     } else {
-      cms_variants.style.display = "none";
+      cmsVariants.style.display = "none";
     }
-    console.log("cms_percent ", this.cms_percent);
+    console.log("cmsPercent ", this.cmsPercent);
   },
   clearTotals: function () {
     const totals = document.querySelectorAll(".total-input");
-    totals.forEach((tot_input) => {
-      tot_input.value = "";
+    totals.forEach((totInput) => {
+      totInput.value = "";
     });
   },
   clearServices: function () {
     //блокируем раздел services
-    const bl_sevices = document.querySelectorAll("input[type=checkbox]");
-    bl_sevices.forEach((service) => {
+    const blSevices = document.querySelectorAll("input[type=checkbox]");
+    blSevices.forEach((service) => {
       service.checked = false;
     });
-    cms_open_var.querySelector("select").value = "";
+    cmsOpenVar.querySelector("select").value = "";
     document.querySelector("#cms-other-input").value = "";
   },
   clearScreens: function () {
@@ -157,20 +157,20 @@ const appData = {
       }
     });
   },
-  blocked_fields: function (blocked_param) {
+  blockedFields: function (blockedParam) {
     //блокируем или разблокируем раздел screens
-    const bl_screens = document.querySelectorAll(".screen");
-    bl_screens.forEach((screen) => {
-      screen.querySelector("select").disabled = blocked_param;
-      screen.querySelector("input[type=text]").disabled = blocked_param;
+    const blScreens = document.querySelectorAll(".screen");
+    blScreens.forEach((screen) => {
+      screen.querySelector("select").disabled = blockedParam;
+      screen.querySelector("input[type=text]").disabled = blockedParam;
     });
     //блокируем или разблокируем раздел services
-    const bl_sevices = document.querySelectorAll("input[type=checkbox]");
-    bl_sevices.forEach((service) => {
-      service.disabled = blocked_param;
+    const blSevices = document.querySelectorAll("input[type=checkbox]");
+    blSevices.forEach((service) => {
+      service.disabled = blockedParam;
     });
     //блокируем добавление новых экранов
-    if (blocked_param === true) {
+    if (blockedParam === true) {
       //блокируем кнопку рассчитать и показываем reset
       buttonPlus.disabled = "true";
       buttonPlus.removeEventListener("click", () => {
@@ -188,8 +188,8 @@ const appData = {
       resetBtn.style.display = "none";
     }
     //блокируем поля блока выбора cms
-    document.querySelector("#cms-select").disabled = blocked_param;
-    document.querySelector("#cms-other-input").disabled = blocked_param;
+    document.querySelector("#cms-select").disabled = blockedParam;
+    document.querySelector("#cms-other-input").disabled = blockedParam;
   },
 
   // isNumber: function (num) {
@@ -301,7 +301,7 @@ const appData = {
       +this.screenPrice +
       this.servicePricesNumber +
       this.servicePricesPercent +
-      this.cms_percent * this.screenPrice;
+      this.cmsPercent * this.screenPrice;
 
     this.servicePercentPrice =
       this.fullPrice - this.fullPrice * (this.rollback / 100);
