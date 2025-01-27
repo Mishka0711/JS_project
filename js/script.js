@@ -44,6 +44,11 @@ const appData = {
   cms_percent: 0,
 
   init: function () {
+    let th_reset = appData.reset.bind(appData);
+    let th_cms_block = appData.cms_block.bind(appData);
+    let th_rangered = appData.rangered.bind(appData);
+    let th_screensCheck = appData.screensCheck.bind(appData);
+    let th_addScreensBlock = appData.addScreensBlock.bind(appData);
     // console.log("init " + this);
     // console.log(this);
     this.addTitle();
@@ -63,6 +68,7 @@ const appData = {
     resetBtn.addEventListener("click", th_reset);
   },
   rangered: function () {
+    let th_start = appData.start.bind(appData);
     this.rollback = inputRange.value;
     inputRangeValue.textContent = inputRange.value + "%";
     console.log("total.value" + total.value);
@@ -144,6 +150,7 @@ const appData = {
     });
   },
   blocked_fields: function (blocked_param) {
+    let th_addScreensBlock = appData.addScreensBlock.bind(appData);
     //блокируем или разблокируем раздел screens
     const bl_screens = document.querySelectorAll(".screen");
     bl_screens.forEach((screen) => {
@@ -176,6 +183,7 @@ const appData = {
   //   return !isNaN(parseFloat(num)) && isFinite(num);
   // },
   screensCheck: function () {
+    let th_start = appData.start.bind(appData);
     screens = document.querySelectorAll(".screen");
     this.screensCheckErrors = 0;
     screens.forEach((screen, index) => {
@@ -322,10 +330,5 @@ const appData = {
 // const isNumber = function (num) {
 //   return !isNaN(parseFloat(num)) && isFinite(num);
 // };
-let th_start = appData.start.bind(appData);
-let th_reset = appData.reset.bind(appData);
-let th_cms_block = appData.cms_block.bind(appData);
-let th_rangered = appData.rangered.bind(appData);
-let th_screensCheck = appData.screensCheck.bind(appData);
-let th_addScreensBlock = appData.addScreensBlock.bind(appData);
+
 appData.init();
