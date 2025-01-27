@@ -48,26 +48,40 @@ const appData = {
     // console.log(this);
     this.addTitle();
     this.screensCheck();
-    screensElements1.addEventListener("input", th_screensCheck);
-    cms_open.addEventListener("change", th_cms_block);
-    cms_open_var
-      .querySelector("select")
-      .addEventListener("input", th_cms_block);
-    document
-      .querySelector("#cms-other-input")
-      .addEventListener("input", th_cms_block);
+    screensElements1.addEventListener("input", () => {
+      this.screensCheck();
+    });
+    cms_open.addEventListener("change", () => {
+      this.cms_block();
+    });
+    cms_open_var.querySelector("select").addEventListener("input", () => {
+      this.cms_block();
+    });
+    document.querySelector("#cms-other-input").addEventListener("input", () => {
+      this.cms_block();
+    });
     console.log("проверка перед условием " + this.screensCheckErrors);
 
-    buttonPlus.addEventListener("click", th_addScreensBlock);
-    inputRange.addEventListener("change", th_rangered);
-    resetBtn.addEventListener("click", th_reset);
+    buttonPlus.addEventListener("click", () => {
+      this.addScreensBlock();
+    });
+    inputRange.addEventListener("change", () => {
+      this.rangered();
+    });
+    resetBtn.addEventListener("click", () => {
+      this.reset();
+    });
   },
   rangered: function () {
     this.rollback = inputRange.value;
     inputRangeValue.textContent = inputRange.value + "%";
     console.log("total.value" + total.value);
     if (total.value > 0) {
-      th_start();
+      // this.start().bind(appData);
+      // this.addScreens();
+      // this.addSevices();
+      this.addPrices();
+      this.showResult();
     }
   },
   addTitle: function () {
@@ -158,11 +172,17 @@ const appData = {
     //блокируем добавление новых экранов
     if (blocked_param === true) {
       //блокируем кнопку рассчитать и показываем reset
-      buttonPlus.removeEventListener("click", th_addScreensBlock);
+      buttonPlus.disabled = "true";
+      buttonPlus.removeEventListener("click", () => {
+        this.addScreensBlock();
+      });
       startBtn.style.display = "none";
       resetBtn.style.display = "";
     } else {
-      buttonPlus.addEventListener("click", th_addScreensBlock);
+      buttonPlus.disabled = "";
+      buttonPlus.addEventListener("click", () => {
+        this.addScreensBlock();
+      });
       //разблокируем кнопку рассчитать и скрываем reset
       startBtn.style.display = "";
       resetBtn.style.display = "none";
@@ -198,12 +218,18 @@ const appData = {
 
     if (this.screensCheckErrors === 0) {
       console.log(this.screensCheckErrors);
-      // console.log(this);
-      startBtn.addEventListener("click", th_start);
+      console.log(this);
+      startBtn.disabled = "";
+      startBtn.addEventListener("click", () => {
+        this.start();
+      });
       console.log("рассчитываем");
     } else {
-      // console.log(this);
-      startBtn.removeEventListener("click", th_start);
+      console.log(this);
+      startBtn.disabled = "true";
+      startBtn.removeEventListener("click", () => {
+        this.start();
+      });
       console.log("не могу рассчитать");
     }
   },
@@ -322,10 +348,5 @@ const appData = {
 // const isNumber = function (num) {
 //   return !isNaN(parseFloat(num)) && isFinite(num);
 // };
-let th_start = appData.start.bind(appData);
-let th_reset = appData.reset.bind(appData);
-let th_cms_block = appData.cms_block.bind(appData);
-let th_rangered = appData.rangered.bind(appData);
-let th_screensCheck = appData.screensCheck.bind(appData);
-let th_addScreensBlock = appData.addScreensBlock.bind(appData);
+
 appData.init();
